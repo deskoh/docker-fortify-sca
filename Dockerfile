@@ -1,6 +1,6 @@
 ARG BASE_REGISTRY=docker.io
 ARG BASE_IMAGE=openjdk
-ARG BASE_TAG=8-jre-slim
+ARG BASE_TAG=11-jre-slim
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} AS base
 

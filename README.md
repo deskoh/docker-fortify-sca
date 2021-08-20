@@ -51,7 +51,7 @@ sourceanalyzer -b $BUILD_ID -clean
 sourceanalyzer –b $BUILD_ID -fcontainer $SCA_OPTIONS $SOURCE_FILES
 
 # List any warnings and errors that occurred in the translation phase
-sourceanalyzer -b $BUILD_ID> -show-build-warnings
+sourceanalyzer -b $BUILD_ID -show-build-warnings
 
 # Analyze the project code and produce the Fortify Project Results file (FPR).
 sourceanalyzer –b $BUILD_ID –scan -fcontainer $SCA_OPTIONS –f $FPR_FILE
