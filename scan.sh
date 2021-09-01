@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 2 ]; then
   # Print usage
   echo "Usage: $0 <project/module> <sourceanalyzer args>"
   echo
   echo "Example:"
-  echo "  $0 --exclude "./src/__tests__:./src/__mocks__" -Dcom.fortify.sca.follow.imports=false "./src/**/*.ts" "./src/**/*.tsx""
-  echo "  $0 -jdk 11 "./src/**/*.java""
+  echo "  $0 --exclude "./__tests__:./__mocks__" -Dcom.fortify.sca.follow.imports=false "./**/*.ts" "./**/*.tsx""
+  echo "  $0 -jdk 11 "./**/*.java""
 fi
 
 BUILD_ID=$1

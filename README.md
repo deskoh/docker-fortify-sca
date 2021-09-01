@@ -6,10 +6,10 @@
 # Copy installer (e.g. Fortify_SCA_and_Apps_<Version>_linux_x64.run) and `fortify.license` into installer directory
 
 # Build image
-docker build -t . sca
+docker build -t sca .
 
 # Build image with JDK  11 (override BASE_TAG)
-docker build -t sca:jdk11 . --build-arg BASE_TAG=11-jdk-slim
+docker build -t sca:jdk11 . --build-arg BASE_IMAGE=openjdk --build-arg BASE_TAG=11-jdk-slim
 ```
 
 ## Quick Start
@@ -23,19 +23,18 @@ See `scan.sh` for environment variables usage.
 
 # Java example
 docker run --rm \
-  -v /local_src:/src \
-  -e BUILD_ID=myjavaapp \
-  -e SCA_OPTIONS="-cp lib/*.jar -jdk 11" \
-  -e SOURCE_FILES=**/*.java \
-  sca
+  -v $(pwd):/src \
+  sca mybuildid -jdk 11 "/src/**/*.java"
+
+# Python example
+docker run --rm \
+  -v $(pwd):/src \
+  sca mybuildid -python-version 3 "/src/**/*.py"
 
 # TypeScript example
 docker run --rm \
-  -v /local_src:/src \
-  -e BUILD_ID=myjavaapp \
-  -e SCA_OPTIONS="-Dcom.fortify.sca.follow.imports=false" \
-  -e SOURCE_FILES=src \
-  sca
+  -v $(pwd):/src \
+  sca mybuildid --exclude "/src/__tests__:/src/__mocks__" -Dcom.fortify.sca.follow.imports=false "/src/**/*.ts" "/src/**/*.tsx"
 ```
 
 ## Running `sourceanalyzer` Manually

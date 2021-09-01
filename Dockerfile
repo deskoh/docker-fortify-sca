@@ -48,15 +48,11 @@ RUN apt-get update && apt-get install -y \
 ADD --chown=fortify:fortify scan.sh /
 RUN chmod +x scan.sh
 
-USER fortify
+ADD --chown=fortify:fortify entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-ENV BUILD_ID=myapp \
-    SOURCE_FILES=**/* \
-    SCA_OPTIONS= \
-    FPR_FILE=results.fpr
+USER fortify
 
 WORKDIR /src
 
-CMD ["/scan.sh"]
-
-# ENTRYPOINT ["/opt/Fortify/SCA/bin/sourceanalyzer"]
+ENTRYPOINT ["/entrypoint.sh"]
