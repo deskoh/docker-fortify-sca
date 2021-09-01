@@ -1,6 +1,6 @@
 ARG BASE_REGISTRY=docker.io
-ARG BASE_IMAGE=openjdk
-ARG BASE_TAG=11-jre-slim
+ARG BASE_IMAGE=debian
+ARG BASE_TAG=stable-slim
 
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG} AS base
 
@@ -17,10 +17,13 @@ ENV PATH=${PATH}:${FORTIFY_INSTALL_DIR}/bin
 
 RUN chmod +x *.run && \
     mv *.run fortify_sca.run && \
-    ./fortify_sca.run --mode unattended && \
+    ./fortify_sca.run --mode unattended --InstallSamples 0 && \
     rm -f /sca/* && \
-    rm -rf /opt/Fortify/SCA/Samples && \
-    fortifyupdate && \
+    /opt/Fortify/SCA/bin/fortifyupdate && \
+    # Remove IDE plugins
+    rm -rf /opt/Fortify/SCA/plugins && \
+    # Remove tools for Apex and Visualforce Code
+    rm -rf /opt/Fortify/SCA/Tools  && \
     chown -R fortify:fortify ${FORTIFY_INSTALL_DIR} && \
     chmod -R o-w ${FORTIFY_INSTALL_DIR}
 
